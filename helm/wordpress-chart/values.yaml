@@ -1,0 +1,32 @@
+replicaCount: 1
+
+image:
+  wordpress:
+    repository: wordpress-local
+    tag: latest
+  mysql:
+    repository: mysql-local
+    tag: latest
+  nginx:
+    repository: nginx-local
+    tag: latest
+
+service:
+  wordpress:
+    port: 80
+  mysql:
+    port: 3306
+  nginx:
+    port: 80
+
+wordpress:
+  db:
+    host: mysql
+    user: wpuser
+    password: wppassword
+    name: wordpress
+
+mysql:
+  storage:
+    size: 5Gi
+

@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: my-wordpress-nginx
+  labels:
+    # CRITICAL: This label ensures Prometheus finds this monitor.
+    # It MUST match the 'serviceMonitorSelector' label set in the kube-prometheus-stack chart (which is usually 'release: syfe-monitor').
+    release: syfe-monitor
+spec:
+  selector:
+    # CRITICAL: These matchLabels MUST exactly match the labels on your Nginx Service (Service: nginx-service.yaml).
+    matchLabels:
+      app.kubernetes.io/name: nginx
+      app.kubernetes.io/instance: my-wordpress
+  endpoints:
+  - port: http # This name MUST match the 'name' of the port defined in your Nginx Service YAML.
+    path: /metrics # The endpoint you configured in your custom Nginx.conf file
+    interval: 15s
+
